@@ -1,6 +1,12 @@
 {
   "type": "module",
   "dependencies": {
+    "systeminformation": "^5.23.5",
     "ws": "^8.18.0"
+  },
+  "scripts":
+  {
+    "server": "/server/server.js",
+    "client": "/client/client.js"
   }
 }
