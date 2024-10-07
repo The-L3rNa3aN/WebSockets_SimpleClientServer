@@ -1,11 +1,11 @@
 {
   "type": "module",
   "dependencies": {
+    "readline": "^1.3.0",
     "systeminformation": "^5.23.5",
     "ws": "^8.18.0"
   },
-  "scripts":
-  {
+  "scripts": {
     "server": "/server/server.js",
     "client": "/client/client.js"
   }

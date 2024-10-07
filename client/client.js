@@ -1,16 +1,24 @@
-// const WebSocket = require("ws");
 import { WebSocket } from "ws";
+import readline from "readline"
+
+const serverAddress = "ws://localhost:8080";
 
 // Create websocket client
-const client = new WebSocket("ws://localhost:8080");
+const client = new WebSocket(serverAddress);
 
 client.on("open", () =>
 {
-    console.log("Connected");
+    client.send("I have connected.");
+    
+    /* const rl = readline.createInterface
+    ({
+        input: process.stdin,
+        output: process.stdout
+    }); */
 });
 
 //Handling the event when receiving a message from the server.
 client.on("message", (message) =>
 {
-    console.log(`Reeived message: ${message}`);
+    console.log(`MESSAGE: ${message}`);
 });
