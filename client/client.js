@@ -9,12 +9,6 @@ const client = new WebSocket(serverAddress);
 client.on("open", () =>
 {
     client.send("I have connected.");
-    
-    /* const rl = readline.createInterface
-    ({
-        input: process.stdin,
-        output: process.stdout
-    }); */
 });
 
 //Handling the event when receiving a message from the server.

@@ -1,10 +1,10 @@
 import { WebSocketServer } from 'ws';
-// import si from "systeminformation";
 import readline from "readline";
 
-const wss = new WebSocketServer({port: 8080});
+const server = new WebSocketServer({port: 8080});
+var rl = undefined;
 
-wss.on('connection', function connection(ws) {
+server.on('connection', function connection(ws) {
   ws.on('error', console.error);
 
   // Receiving messages from clients.
@@ -15,12 +15,22 @@ wss.on('connection', function connection(ws) {
   // Sending a message to the client on connecting.
   ws.send("You have connected to the server.");
 
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  rl.question("Test", (ans) => { ws.send(ans) });
-
-  /* setInterval(async () =>
+  rl = readline.emitKeypressEvents(process.stdin);
+  /* if(process.stdin.isTTY)  */process.stdin.setRawMode(true);
+  process.stdin.on('keypress', (key) =>
   {
-    const cpuTemp = JSON.stringify(await si.currentLoad());
-    ws.send(cpuTemp);
-  }, 1000); */
+    if(key === '/')
+    {
+      process.stdin.setRawMode(false);
+      rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+      rl.question("SAY: ", (s) =>
+      {
+        ws.send(s);
+        rl = readline.emitKeypressEvents(process.stdin);
+        /* if(process.stdin.isTTY) */ process.stdin.setRawMode(true);
+      });
+    }
+  });
+
+  //TRY EXPERIMENTING WITH PROCESS.STDOUT
 });
