@@ -2,9 +2,9 @@ import { WebSocketServer } from 'ws';
 import readline from "readline";
 
 const server = new WebSocketServer({port: 8080});
-var rl = undefined;
 
-server.on('connection', function connection(ws) {
+server.on('connection', function connection(ws)
+{
   ws.on('error', console.error);
 
   // Receiving messages from clients.
@@ -15,22 +15,22 @@ server.on('connection', function connection(ws) {
   // Sending a message to the client on connecting.
   ws.send("You have connected to the server.");
 
-  rl = readline.emitKeypressEvents(process.stdin);
-  /* if(process.stdin.isTTY)  */process.stdin.setRawMode(true);
-  process.stdin.on('keypress', (key) =>
+  readline.emitKeypressEvents(process.stdin);
+  if(process.stdin.isTTY) process.stdin.setRawMode(true);
+  var test = process.stdin.on('keypress', (key) =>
   {
+    // console.log("KEY PRESSED: " + key);
     if(key === '/')
     {
-      process.stdin.setRawMode(false);
-      rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-      rl.question("SAY: ", (s) =>
+      // process.stdin.setRawMode(false);
+      var _rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "SAY> " });
+      _rl.prompt();
+
+      _rl.on('line', (line) =>
       {
-        ws.send(s);
-        rl = readline.emitKeypressEvents(process.stdin);
-        /* if(process.stdin.isTTY) */ process.stdin.setRawMode(true);
+        ws.send(line);
+        _rl.close();
       });
     }
   });
-
-  //TRY EXPERIMENTING WITH PROCESS.STDOUT
 });
