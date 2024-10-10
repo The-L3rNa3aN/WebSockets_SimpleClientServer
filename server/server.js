@@ -15,9 +15,9 @@ server.on('connection', function connection(ws)
   // Sending a message to the client on connecting.
   ws.send("You have connected to the server.");
 
-  readline.emitKeypressEvents(process.stdin);
+  /* readline.emitKeypressEvents(process.stdin);
   if(process.stdin.isTTY) process.stdin.setRawMode(true);
-  var test = process.stdin.on('keypress', (key) =>
+  process.stdin.on('keypress', (key) =>
   {
     // console.log("KEY PRESSED: " + key);
     if(key === '/')
@@ -32,5 +32,14 @@ server.on('connection', function connection(ws)
         _rl.close();
       });
     }
+  }); */
+
+  var rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "" });
+  rl.prompt();
+
+  rl.on('line', (line) =>
+  {
+    // rl.clearLine();
+    ws.send(`SERVER: ${line}`);
   });
 });

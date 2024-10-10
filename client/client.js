@@ -14,5 +14,5 @@ client.on("open", () =>
 //Handling the event when receiving a message from the server.
 client.on("message", (message) =>
 {
-    console.log(`MESSAGE: ${message}`);
+    console.log(`${message}`);
 });
