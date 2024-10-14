@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import readline from "readline"
+import readline from "readline";
 
 const serverAddress = "ws://localhost:8080";
 var clientName = undefined

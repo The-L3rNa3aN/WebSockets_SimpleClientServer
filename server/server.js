@@ -3,6 +3,7 @@ import readline from "readline";
 
 //Creating a server with a port.
 const server = new WebSocketServer({port: 8080});
+var clientList = [];
 
 //Enabling readline for sending messages across the connections.
 var rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "" });
@@ -12,8 +13,18 @@ server.on('connection', function connection(ws)
 {
   ws.on('error', console.error);
 
+  //Connected clients are added to clientList.
+  clientList.push(ws);
+
+  //TO DO: handling "disconnect" messages with the name of the client.
+  // ws.on("close", () => {});
+
   // Receiving messages from clients.
-  ws.on('message', function message(data) { console.log(`${data}`); });
+  ws.on('message', function message(data)
+  {
+    console.log(`${data}`);
+    broadcastToAll(ws, data);
+  });
 
   // Sending a message to the client on connecting.
   ws.send("SERVER: You have connected to the server.");
@@ -39,8 +50,12 @@ server.on('connection', function connection(ws)
 
   rl.on('line', (line) =>
   {
-    // readline.clearLine(process.stdout, 0);
-    readline.clearScreenDown(process.stdout);
     ws.send(`SERVER: ${line}`);
   });
 });
+
+//Broadcasting a message sent by a client to all the other clients except to the client sending the message.
+function broadcastToAll(sender, message)
+{
+  clientList.forEach(_client => { if(_client !== sender) _client.send(`${message}`); });
+}
