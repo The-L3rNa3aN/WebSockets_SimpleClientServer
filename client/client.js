@@ -15,10 +15,95 @@ function onStartName(_str)
         if(name.length !== 0)
         {
             clientName = name;
-            main();
+            // main();
+
+            console.log("Searching for local servers... Please wait!");
+            findLocalServers(8080, "10.10.12.", 1, 255, 20, 500, (servers) => { serverSelect(servers); });
         }
         else onStartName("That ain't a name. Enter again: ");
     });
+}
+
+function findLocalServers(port, ipBase, ipLow, ipHigh, maxInFlight, timeout, callback)
+{
+    var ipCurrent = +ipLow, numInFlight = 0, servers = [];
+    ipHigh = +ipHigh;
+
+    function tryOne(ip)
+    {
+        ++numInFlight;
+        var address = "ws://" + ipBase + ip + ":" + port;
+        var socket = new WebSocket(address);
+        var timer = setTimeout(function()
+        {
+            // console.log(address + " timeout");
+            var s = socket;
+            socket = null;
+            s.close();
+            --numInFlight;
+            next();
+        }, timeout);
+        socket.onopen = function()
+        {
+            if (socket)
+            {
+                // console.log(socket._socket);
+                // console.log(address + " success");
+                clearTimeout(timer);
+                servers.push(socket.url);
+                --numInFlight;
+                next();
+            }
+        };
+        socket.onerror = function(err)
+        {
+            if (socket)
+            {
+                // console.log(address + " error");
+                clearTimeout(timer);
+                --numInFlight;
+                next();
+            }
+        }
+    }
+
+    function next()
+    {
+        while (ipCurrent <= ipHigh && numInFlight < maxInFlight)
+        {
+            tryOne(ipCurrent++);
+        }
+        // if we get here and there are no requests in flight, then
+        // we must be done
+        if (numInFlight === 0) callback(servers);
+    }
+
+    next();
+}
+
+function serverSelect(serverList)
+{
+    for(let i = 0; i < serverList.length; i++)
+    {
+        let listNo = i + 1;
+        console.log(`${listNo}          ${serverList[i]}`);
+    }
+
+    enterServerNum("Enter a number from the list to join: ");
+
+    function enterServerNum(s)
+    {
+        rl.question(s, num =>
+        {
+            if(num <= serverList.length)
+            {
+                serverAddress = serverList[num - 1];
+                main();
+            }
+            else
+                enterServerNum("Invalid entry! Enter again: ");
+        });
+    }
 }
 
 function main()
