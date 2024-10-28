@@ -59,3 +59,12 @@ function broadcastToAll(sender, message)
 {
   clientList.forEach(_client => { if(_client !== sender) _client.send(`${message}`); });
 }
+
+//Adding code snippet here for future reference.
+/* import http from "http";
+import open from "open";
+
+(async () =>
+{
+    await open("./index.html", { "wait": true });
+})(); */
