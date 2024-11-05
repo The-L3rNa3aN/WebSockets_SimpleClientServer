@@ -29,6 +29,9 @@ const config = {
             template: 'index.html',
             title: 'dev server'
         }),
+        new MiniCssExtractPlugin({
+            filename: "style.css"
+        })
 
         // Add your plugins here
         // Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -40,12 +43,8 @@ const config = {
                 loader: 'html-loader',
             },
             {
-                test: /\.s[ac]ss$/i,
-                use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
-            },
-            {
                 test: /\.css$/i,
-                use: [stylesHandler, 'css-loader', 'postcss-loader'],
+                use: [stylesHandler, 'css-loader'],
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
