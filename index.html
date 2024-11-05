@@ -3,12 +3,21 @@
     <head>
         <meta charset="utf-8" />
         <title>SimpleWebSocketClientServer</title>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <script type="module" src="dist/main.js"></script>
-        <h1>Hello world!</h1>
-        <h2>Tip: Check your console</h2>
-        <p>This is a test.</p>
+<!--         <script type="module" src="dist/main.js"></script> -->
+        <script type="module" src="src/index.js"></script>
+        
+        <div class="mainpage">
+            <h2>Select an option: </h2>
+            <input type="button" class="startserver" value="Start server"><br><br>
+            <input type="button" class="startclient" value="Start client">
+        </div>
+
+        <div class="serverpage">
+            <h2>SERVER</h2>
+        </div>
     </body>
     
 </html>
