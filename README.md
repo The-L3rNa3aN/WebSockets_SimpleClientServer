@@ -7,4 +7,5 @@ Just a simple framework of a client and server using websockets.
 ~~Clients now have names but it can be done better. Client messages however are not broadcast to the everyone. Need to do that.~~<br>
 ~~Messages are now broadcast to everyone in the server! Need to handle messages on a client disconnecting. Should I try making some kind of server browser?~~<br>
 ~~Tried making the project run with Webpack and Serve.~~<br>
-Trying to have Webpack and Websockets to run together but in vain. This part is gonna be lengthy.
+~~Trying to have Webpack and Websockets to run together but in vain. This part is gonna be lengthy.~~<br>
+Fuck it. Gotta start over.
