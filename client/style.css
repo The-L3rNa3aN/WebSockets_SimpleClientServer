@@ -1,0 +1,70 @@
+.hide
+{
+    display: none;
+}
+
+.serverlist
+{
+    list-style-type: none;
+    display: contents;
+    line-height: 19px;
+
+    .serverlistitem
+    {
+        display: flex;
+        align-items: center;
+        margin-top: -33px;
+
+        .serverlistindex
+        {
+            border: 2px solid black;
+            padding: 5px;
+            width: 16px;
+            text-align: center
+        }
+
+        #serverName
+        {
+            border: 2px solid black;
+            width: 200px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .buttonContainer
+        {
+            border: 2px solid black;
+            padding: 4px;
+            display: grid;
+            width: 50px;
+        }
+    }
+}
+
+.chatarea
+{
+    width: 500px;
+    height: 700px;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+
+    .msgElement
+    {
+        display: relative;
+        position: relative;
+    }
+}
+
+.chatbox
+{
+    margin-left: 10px;
+    width: 465px;
+}
+
+.errortext
+{
+    color: red;
+}
