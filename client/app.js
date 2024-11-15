@@ -217,5 +217,13 @@ btn_name.addEventListener('click', () =>
     box_name.value = "";
 });
 
-console.log(window);
-window.onclose = () => { alert("This is a test."); };
+// console.log(window);
+// Somehow, this triggers only after you've interacted with the webpage.
+window.onbeforeunload = (event) =>
+{
+    if(clientSocket)
+    {
+        clientSocket.send(clientName + " has disconnected.");
+        clientSocket.close();
+    }
+};
