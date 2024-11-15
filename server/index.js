@@ -1,8 +1,25 @@
-import { WebSocketServer } from 'ws';
-import readline from "readline";
+const ws = require("ws");
+const express = require("express");
+const path = require("path");
+const http = require('http');
+const fs = require('fs');
+const readline = require("readline");
+const PORT = 3000;
+
+var exapp = express();
+
+// http://localhost:3000/ <- to fetch request.
+/* exapp.get('/', (req, res) =>
+{
+    const options = { root: path.join(__dirname)};
+    const fileName = "index.html";
+    res.sendFile(fileName, options);
+});
+
+exapp.listen(PORT); */
 
 //Creating a server with a port.
-const server = new WebSocketServer({port: 8080});
+const server = new ws.WebSocketServer({port: 8080});
 var clientList = [];
 
 //Enabling readline for sending messages across the connections.
@@ -11,13 +28,11 @@ rl.prompt();
 
 server.on('connection', function connection(ws)
 {
-  ws.on('error', console.error);
-
   //Connected clients are added to clientList.
   clientList.push(ws);
 
-  //TO DO: handling "disconnect" messages with the name of the client.
-  // ws.on("close", () => {});
+  //Popping clients off clientList which are no longer connected the server.
+  ws.on('close', () => { clientList.forEach(_client => { if (ws === _client) clientList.pop(_client); }); });
 
   // Receiving messages from clients.
   ws.on('message', function message(data)
@@ -29,35 +44,16 @@ server.on('connection', function connection(ws)
   // Sending a message to the client on connecting.
   ws.send("SERVER: You have connected to the server.");
 
-  /* readline.emitKeypressEvents(process.stdin);
-  if(process.stdin.isTTY) process.stdin.setRawMode(true);
-  process.stdin.on('keypress', (key) =>
-  {
-    // console.log("KEY PRESSED: " + key);
-    if(key === '/')
-    {
-      // process.stdin.setRawMode(false);
-      var _rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: "SAY> " });
-      _rl.prompt();
-
-      _rl.on('line', (line) =>
-      {
-        ws.send(line);
-        _rl.close();
-      });
-    }
-  }); */
-
   rl.on('line', (line) =>
   {
-    ws.send(`SERVER: ${line}`);
+    ws.send("SERVER: " + line);
   });
 });
 
 //Broadcasting a message sent by a client to all the other clients except to the client sending the message.
 function broadcastToAll(sender, message)
 {
-  clientList.forEach(_client => { if(_client !== sender) _client.send(`${message}`); });
+  clientList.forEach(_client => { if(_client !== sender) _client.send(message); });
 }
 
 //Adding code snippet here for future reference.
