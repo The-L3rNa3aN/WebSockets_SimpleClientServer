@@ -4,11 +4,12 @@ import open from "open";
 
 // Create Express server to serve frontend and launch frontend link.
 var exapp = express();
+const PORT = 3001;
 exapp.get("/", (req, res) =>
 {
     const options = { root: path.join("./") };
     res.sendFile("index.html", options);
 });
 exapp.use(express.static("./"));
-exapp.listen(3000);
-open("http://localhost:3000");
+exapp.listen(PORT);
+open("http://localhost:" + PORT);

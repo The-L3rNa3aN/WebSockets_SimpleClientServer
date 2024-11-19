@@ -1,22 +1,25 @@
-const ws = require("ws");
+/* const ws = require("ws");
 const express = require("express");
 const path = require("path");
-const http = require('http');
-const fs = require('fs');
-const readline = require("readline");
+const readline = require("readline"); */
+import * as ws from "ws";
+import express from "express";
+import path from "path";
+import readline from "readline";
+import open from "open";
 const PORT = 3000;
 
 var exapp = express();
 
 // http://localhost:3000/ <- to fetch request.
-/* exapp.get('/', (req, res) =>
+exapp.get('/', (req, res) =>
 {
-    const options = { root: path.join(__dirname)};
-    const fileName = "index.html";
-    res.sendFile(fileName, options);
+    const options = { root: path.join("./")};
+    res.sendFile("index.html", options);
 });
-
-exapp.listen(PORT); */
+exapp.use(express.static(path.join("./", "/")))
+exapp.listen(PORT);
+open("http://localhost:3000");
 
 //Creating a server with a port.
 const server = new ws.WebSocketServer({port: 8080});

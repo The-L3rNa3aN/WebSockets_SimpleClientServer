@@ -16,8 +16,6 @@ function init()
         }
     });
 
-    console.log(chatpage, box_chat, btn_chat, chatarea);
-
     //Starting message to notify the user of their server and the port its running on.
     let firstMsg = document.createElement("span");
     firstMsg.classList.add("msgElement");
