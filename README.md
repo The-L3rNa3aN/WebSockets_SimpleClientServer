@@ -15,4 +15,5 @@ Run two instances of your CLI, each directed to the "client" and "server" folder
 ~~Tried making the project run with Webpack and Serve.~~<br>
 ~~Trying to have Webpack and Websockets to run together but in vain. This part is gonna be lengthy.~~<br>
 ~~Fuck it. Gotta start over.~~<br>
-Major overhaul accomplished. Only server frontend is remaining, along with some polishing.
+~~Major overhaul accomplished. Only server frontend is remaining, along with some polishing.~~<br>
+Started server frontend. Messages sent between the server and the clients are coming as Blobs and I wonder why.
